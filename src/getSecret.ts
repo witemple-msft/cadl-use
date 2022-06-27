@@ -3,10 +3,8 @@
 // Requires use of the Azure Identity library
 import type { TokenCredential } from "@azure/identity";
 
-interface SetSecretRequestBody {
-  value: string;
-  contentType?: string;
-  tags?: { [k: string]: string };
+interface GetSecretOptions {
+  version?: string;
 }
 
 interface SecretValue {
@@ -18,15 +16,15 @@ interface SecretValue {
   managed?: boolean;
 }
 
-export async function setSecret(
+export async function getSecret(
   baseUrl: URL,
   credential: TokenCredential,
   name: string,
   apiVersion: "7.3",
-  body: SetSecretRequestBody
+  options: GetSecretOptions = {}
 ): Promise<SecretValue> {
-  // PUT /secrets/{name}
-  const path = `/secrets/${name}`;
+  // GET /secrets/{name}/{version}
+  const path = `/secrets/${name}/${options.version ?? ""}`;
   const query = `?api-version=${apiVersion}`;
   const resource = new URL(path + query, baseUrl).toString();
 
@@ -35,12 +33,11 @@ export async function setSecret(
   );
 
   const init = {
-    method: "PUT",
+    method: "GET",
     headers: {
       Authorization: `Bearer ${authorization?.token}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body),
   };
 
   const res = await fetch(resource, init);

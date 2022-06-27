@@ -19,7 +19,7 @@ model KeyVaultBodyRequest<TBody> extends KeyVaultRequest {
 
 model KeyVaultSuccessResponse<T> {
   @statusCode code: 200;
-  ...T;
+  @body body: T;
 }
 
 model KeyVaultErrorResponse {
@@ -52,7 +52,7 @@ namespace Secrets {
 
   @get op getSecret(
     @path name: string,
-    @path version: string,
+    @path version?: string,
     ...KeyVaultRequest
   ): KeyVaultResponse<SecretValue>;
 
