@@ -16,6 +16,7 @@
     "@cadl-lang/compiler": "file:../../node_modules/@cadl-lang/compiler",
     "@cadl-lang/rest": "^0.15.0",
     "@types/prettier": "^2.6.3",
+    "cadl-azure-auth": "file:../cadl-azure-auth",
     "prettier": "^2.7.1"
   },
   "devDependencies": {

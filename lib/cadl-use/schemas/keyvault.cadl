@@ -1,5 +1,7 @@
 import "@cadl-lang/rest";
+import "cadl-azure-auth";
 
+@Azure.Auth.scope("https://vault.azure.net/.default")
 namespace Microsoft.KeyVault;
 
 using Cadl.Http;
